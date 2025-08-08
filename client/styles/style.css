@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.app-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  background-color: #1e1e1e;
+  height: 100vh;
+  position: fixed;
+}
+
+.logo {
+  font-size: 24px;
+  margin-bottom: 40px;
+  color: #1da1f2;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.feed {
+  margin-left: 250px;
+  padding: 20px;
+  width: 100%;
+}
+
+.tweet-box textarea {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  resize: none;
+  height: 80px;
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.tweet-box button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #1da1f2;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.tweet {
+  background-color: #1e1e1e;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.tweet-actions {
+  margin-top: 10px;
+}
+
+.tweet-actions button {
+  background: none;
+  border: none;
+  color: #ccc;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.home-page {
+  padding: 20px;
+  margin-left: 250px;
+}
+
+.welcome-banner {
+  background-color: #1da1f2;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.flash-message {
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.flash-message.success {
+  background-color: #28a745;
+  color: white;
+}
+
+.flash-message.error {
+  background-color: #dc3545;
+  color: white;
+}
+
+.sidebar a.active {
+  background-color: #333;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+}

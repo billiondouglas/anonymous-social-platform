@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tweaker - Homepage </title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <script src="/scripts/scripts.js" defer></script>
+</head>
+<body>
+  <div class="home-page">
+    <% if (success) { %>
+      <div class="flash-message success"><%= success %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="flash-message error"><%= error %></div>
+    <% } %>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h1 class="logo">Tweaker</h1>
+        <nav>
+          <ul>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Feed</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="/logout">Log out</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Feed -->
+      <main class="feed">
+        <!-- Welcome Banner -->
+        <section class="welcome-banner">
+          <h2>Welcome, <%= username %>!</h2>
+        </section>
+        <!-- Tweet Form -->
+        <section class="tweet-box">
+          <textarea placeholder="What's on your mind?" maxlength="280"></textarea>
+          <button id="postTweet">Post</button>
+        </section>
+
+        <!-- Tweets Feed -->
+        <section id="tweetFeed" class="tweet-feed">
+          <!-- Tweets will be rendered here dynamically -->
+          <div class="tweet">
+            <p>This is a sample tweet on Tweaker!</p>
+            <div class="tweet-actions">
+              <button>💬</button>
+              <button>❤️</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

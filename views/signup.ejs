@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/styles/signup.css">
+</head>
+<body>
+  <% if (typeof success_msg !== 'undefined') { %>
+    <div class="flash success"><%= success_msg %></div>
+  <% } %>
+  <% if (typeof error_msg !== 'undefined') { %>
+    <div class="flash error"><%= error_msg %></div>
+  <% } %>
+  <div class="container">
+    <h1>Join Tweaker</h1>
+    <form action="/signup" method="POST" id="signup-form">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirmPassword" required>
+        
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <div id="message" class="hidden">
+      <h2>Your Unique Secret Key</h2>
+      <p id="secret-key"></p>
+      <small>Copy and store this key securely. It will be required to recover your account. Tweaker will never show it again.</small>
+    </div>
+   <p>Already have an account? <a href="/login">Sign in</a></p>
+  </div>
+
+  <!-- <script src="signup.js"></script> -->
+</body>
+</html>
