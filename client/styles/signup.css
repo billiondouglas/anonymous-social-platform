@@ -1,5 +1,5 @@
 body {
-  background-color: #0d1117;
+  background-color: #000000;
   color: #c9d1d9;
   font-family: 'Segoe UI', sans-serif;
   display: flex;
@@ -11,7 +11,7 @@ body {
 
 .container {
   background: #161b22;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 10px;
   box-shadow: 0 0 10px #30363d;
   width: 100%;
@@ -32,18 +32,18 @@ input {
   padding: 0.6rem;
   margin-top: 0.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 14px;
   background: #21262d;
   color: #c9d1d9;
 }
 
 button {
-  margin-top: 1.5rem;
-  width: 100%;
+  width: 104%;
+  margin-top: 2rem;
   padding: 0.7rem;
   background-color: #1da1f2;
   border: none;
-  border-radius: 5px;
+  border-radius: 14px;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -69,4 +69,29 @@ button:hover {
 a {
   text-decoration: none;
   color: #1da1f2;
+}
+.flash-messages {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 90%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.flash-messages.error {
+  background-color: #ff4d4d;
+  color: #fff;
+  border: 1px solid #cc0000;
+}
+
+.flash-messages.success {
+  background-color: #28a745;
+  color: #fff;
+  border: 1px solid #1c7c31;
 }

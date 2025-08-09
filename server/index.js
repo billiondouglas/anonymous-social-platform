@@ -3,6 +3,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const connectDB = require("./config");
 const User = require("./models/user");
+const Tweet = require("./models/tweet");
 require("dotenv").config();
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -21,6 +22,7 @@ app.set('view engine', 'ejs');
 
 //middleware
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(session({
   secret: process.env.SESSION_SECRET || "tweaker_secret",
   resave: false,
@@ -56,6 +58,113 @@ async function requireLogin(req, res, next) {
 }
 
 app.set("views", path.join(__dirname, "../views"));
+
+// Get all tweets for the newsfeed (all users)
+app.get("/tweets", requireLogin, async (req, res) => {
+  try {
+    const tweets = await Tweet.find().sort({ createdAt: -1 });
+    res.json(tweets);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error fetching tweets" });
+  }
+});
+
+// Post a new tweet
+app.post("/tweets", requireLogin, async (req, res) => {
+  const { text } = req.body;
+  if (!text || !text.trim()) {
+    return res.status(400).json({ message: "Tweet text is required" });
+  }
+  try {
+    const newTweet = new Tweet({
+      text: text.trim(),
+      likes: [],
+      comments: [],
+      retweets: [],
+      username: req.session.user.username
+    });
+    await newTweet.save();
+    res.status(201).json(newTweet);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error creating tweet" });
+  }
+});
+
+// Like a tweet
+app.post("/tweets/:id/like", requireLogin, async (req, res) => {
+  try {
+    const tweet = await Tweet.findById(req.params.id);
+    if (!tweet) return res.status(404).json({ message: "Tweet not found" });
+
+    const username = req.session.user.username;
+    tweet.likes = Array.isArray(tweet.likes) ? tweet.likes : [];
+
+    if (tweet.likes.some(like => like.username === username)) {
+      // Unlike if already liked
+      tweet.likes = tweet.likes.filter(like => like.username !== username);
+    } 
+    if (!tweet.addLike(username)) {
+      return res.status(400).json({ message: "Already liked" });
+    }
+
+    await tweet.save();
+    res.json({ likes: tweet.likes });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error liking tweet" });
+  }
+});
+
+// Comment on a tweet
+app.post("/tweets/:id/comment", requireLogin, async (req, res) => {
+  const { text } = req.body;
+  if (!text || !text.trim()) {
+    return res.status(400).json({ message: "Comment text is required" });
+  }
+  try {
+    const tweet = await Tweet.findById(req.params.id);
+    if (!tweet) return res.status(404).json({ message: "Tweet not found" });
+
+    tweet.comments = Array.isArray(tweet.comments) ? tweet.comments : [];
+    tweet.comments.push({
+      username: req.session.user.username,
+      text: text.trim(),
+      createdAt: new Date()
+    });
+    await tweet.save();
+    res.json({ comments: tweet.comments });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error commenting" });
+  }
+});
+
+// Retweet a tweet
+app.post("/tweets/:id/retweet", requireLogin, async (req, res) => {
+  try {
+    const tweet = await Tweet.findById(req.params.id);
+    if (!tweet) return res.status(404).json({ message: "Tweet not found" });
+
+    const username = req.session.user.username;
+    tweet.retweets = Array.isArray(tweet.retweets) ? tweet.retweets : [];
+
+    if (tweet.retweets.some(rt => rt.username === username)) {
+      // Remove retweet if already retweeted
+      tweet.retweets = tweet.retweets.filter(rt => rt.username !== username);
+    } 
+    if (!tweet.addRetweet(username)) {
+      return res.status(400).json({ message: "Already retweeted" });
+    }
+
+    await tweet.save();
+    res.json({ retweets: tweet.retweets });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error retweeting" });
+  }
+});
 
 // Generate 12-word secret key
 function generateSecretKey() {
@@ -130,8 +239,9 @@ app.post("/signup", async (req, res) => {
 
     await newUser.save();
 
-    req.flash("success_msg", "✅ Account created successfully! Please log in.");
-    res.redirect("/login");
+    req.session.user = newUser;
+    req.flash("success_msg", `Welcome, ${newUser.username}! Your account has been created.`);
+    res.redirect("/home");
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error. Try again.");
@@ -143,21 +253,30 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    req.flash("error_msg", "All fields are required.");
-    return res.redirect("/login");
+    return res.render("login", {
+      error_msg: "All fields are required.",
+      success_msg: "",
+      username
+    });
   }
 
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      req.flash("error_msg", "Invalid username or password.");
-      return res.redirect("/login");
+      return res.render("login", {
+        error_msg: "Invalid username or password.",
+        success_msg: "",
+        username
+      });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      req.flash("error_msg", "Invalid username or password.");
-      return res.redirect("/login");
+      return res.render("login", {
+        error_msg: "Incorrect password.",
+        success_msg: "",
+        username
+      });
     }
 
     req.session.user = user;
@@ -165,7 +284,11 @@ app.post("/login", async (req, res) => {
     res.redirect("/home");
   } catch (err) {
     console.error(err);
-    res.status(500).send("Server error. Try again.");
+    res.render("login", {
+      error_msg: "Server error. Please try again.",
+      success_msg: "",
+      username
+    });
   }
 });
 
