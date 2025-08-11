@@ -292,12 +292,16 @@ app.post("/login", async (req, res) => {
   }
 });
 
+//setting a route so the app can accress my displacement map images
+app.use('/images', express.static(path.join(__dirname,'client/images')))
+
+
 // Home page route
 app.get("/home", requireLogin, (req, res) => {
   res.render("home", {
     username: req.session.user.username,
-    success: req.flash("success_msg"),
-    error: req.flash("error_msg")
+    success: req.flash("success_msg")[0] || "",
+    error: req.flash("error_msg")[0] || ""
   });
 });
 

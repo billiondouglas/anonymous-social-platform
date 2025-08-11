@@ -16,78 +16,96 @@
     <script src="/scripts/scripts.js" defer></script>
   </head>
   <body>
+    <!-- Main container for the homepage -->
     <div class="home-page">
-      <% if (success) { %>
+      <!-- EJS conditional: Display success flash message if it exists and is not empty -->
+      <% if (success && success.trim() !== "") { %>
+      <!-- Success message container -->
       <div class="flash-message success"><%= success %></div>
-      <% } %> <% if (error) { %>
+      <% } %>
+      <!-- EJS conditional: Display error flash message if it exists and is not empty -->
+      <% if (error && error.trim() !== "") { %>
+      <!-- Error message container -->
       <div class="flash-message error"><%= error %></div>
       <% } %>
+      <!-- Container that holds sidebar and main content feed -->
       <div class="app-container">
-        <!-- Sidebar -->
+        <!-- Sidebar navigation panel -->
         <aside class="sidebar">
+          <!-- Application logo/title -->
           <h1 class="logo">Tweaker</h1>
           <nav>
             <ul>
+              <!-- Profile navigation item with user icon -->
               <li>
                 <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
               </li>
+              <!-- Home navigation item with house icon -->
               <li>
-                <a href="#" class="active"
-                  ><i class="fa-solid fa-house"></i> Home</a
-                >
+                <a href="#"><i class="fa-solid fa-house"></i> Home</a>
               </li>
+              <!-- Feed navigation item with RSS icon -->
               <li>
                 <a href="#"><i class="fa-solid fa-rss"></i> Feed</a>
               </li>
+              <!-- Settings navigation item with gear icon -->
               <li>
                 <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
               </li>
+              <!-- Logout navigation item with logout icon -->
               <li>
-                <a href="/logout"
-                  ><i class="fa-solid fa-right-from-bracket"></i> Log out</a
-                >
+                <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a>
               </li>
             </ul>
           </nav>
         </aside>
-
-        <!-- Main Feed -->
+        <!-- Vertical line separating sidebar from main feed -->
+        <div class="right-vertical-line"></div>
+        <!-- Main content area displaying the tweet feed -->
         <main class="feed">
-          <!-- Welcome Banner -->
-          <section class="welcome-banner">
-            <h2>Welcome, <%= username %>!</h2>
-          </section>
-          <!-- Tweet Form -->
+          <!-- Wrapper providing a visually styled container with a "liquid glass" effect -->
+          <div class="liquid-glass-wrapper">
+            <!-- Search bar container with search icon and input -->
+              <div class="search-container">
+                  <i class="fa-solid fa-search"></i>
+                  <input type="text" class="search-bar" placeholder="Search..." />
+                </div>
+          </div>
+          <!-- Section containing the form for posting new tweets -->
           <section class="tweet-box">
-            <textarea
-              placeholder="What's on your mind? speak freely!"
-              maxlength="360"
-            ></textarea>
+            <!-- Textarea for user to input tweet content, limited to 280 characters -->
+            <textarea placeholder="Say something..." maxlength="280"></textarea>
+            <!-- Button to submit/post the tweet -->
             <button id="postTweet">Post</button>
           </section>
 
-          <!-- Tweets Feed -->
+          <!-- Section that dynamically displays the list of tweets -->
           <section id="tweetFeed" class="tweet-feed">
-            <!-- Tweets will be rendered here dynamically -->
+            <!-- Individual tweet container template -->
             <div class="tweet">
-              <!-- Username + timestamp -->
+              <!-- Header line showing username and timestamp -->
               <div class="tweet-header-line">
-                <span class="tweet-username">@username</span>
-                <span class="dot">·</span>
-                <span class="tweet-time">2h</span>
+                <span class="tweet-username"></span>
+                <span class="dot"></span>
+                <span class="tweet-time"></span>
               </div>
 
-              <!-- Tweet text -->
-              <p class="tweet-text">This is a sample tweet on Tweaker!</p>
+              <!-- Paragraph displaying the tweet's text content -->
+              <p class="tweet-text"></p>
 
-              <!-- Actions row -->
+              <!-- Row of action buttons for interacting with the tweet -->
               <div class="tweet-actions">
-                <button title="Comment">💬 0</button>
-                <button title="Retweet">🔁 0</button>
-                <button title="Like">❤️ 0</button>
+                <!-- Comment button with comment icon -->
+                <button title="Comment"><i class="fa-regular fa-comment"></i></button>
+                <!-- Retweet button with retweet icon -->
+                <button title="Retweet"><i class="fa-solid fa-retweet"></i></button>
+                <!-- Like button with heart icon -->
+                <button title="Like"><i class="fa-regular fa-heart"></i></button>
               </div>
             </div>
           </section>
+          <!-- Vertical line separating the main feed content from other UI elements -->
+          <div class="left-vertical-line"></div>
         </main>
       </div>
     </div>

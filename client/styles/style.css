@@ -1,206 +1,548 @@
 html,
 body {
+  /* Reset default margins and paddings to ensure the layout starts clean */
   margin: 0;
   padding: 0;
+  /* Make html and body take full width and height of the viewport */
   width: 100%;
   height: 100%;
+  /* Prevent horizontal scrolling caused by overflowing content */
   overflow-x: hidden;
 }
 
 body {
+  /* Set a modern, clean font stack for better readability and consistency */
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
     Arial, sans-serif;
+  /* Use black background for a dark theme, reducing eye strain */
   background-color: #000000;
+  /* Use white text for high contrast and readability on dark background */
   color: #ffffff;
+  /* Include padding in element's total width and height calculations */
   box-sizing: border-box;
+  /* Add horizontal padding to create whitespace on left and right */
   padding-left: 5%;
   padding-right: 5%;
+  /* Fix body height to viewport height to control scrolling behavior */
   height: 100vh; /* fix height to viewport */
+  /* Allow vertical scrolling if content overflows viewport height */
   overflow-y: auto; /* allow vertical scroll if needed */
+  /* Hide scrollbar visually but keep scrolling functional in Firefox */
+  scrollbar-width: none; /* Firefox */
+  /* Hide scrollbar visually but keep scrolling functional in IE and Edge */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+/* Hide scrollbar visually but keep scrolling functional in WebKit browsers */
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .app-container {
+  /* Use flexbox layout to align child elements horizontally */
   display: flex;
+  /* Take full width and height of parent */
   width: 100%;
   height: 100%;
+  /* Limit max width to viewport width minus padding to prevent overflow */
   max-width: calc(100vw - 20px); /* viewport minus 10px padding on each side */
+  /* Center container horizontally within viewport */
   margin: 0 auto; /* center horizontally */
 }
 
 .sidebar {
+  /* Sidebar takes 20% of viewport width for navigation or controls */
   width: 20vw;
+  /* Add generous padding for spacing inside sidebar */
   padding: 3em;
+  /* Sidebar height fixed to viewport height for full vertical coverage */
   height: 100vh;
+  /* Include padding and border in element's size */
   box-sizing: border-box;
-  border-right: 1px solid white; /* white vertical line */
+  /* Prevent sidebar from shrinking when container shrinks */
   flex-shrink: 0; /* prevent shrinking */
-  position: sticky; /* stick sidebar while scrolling */
-  top: 0; /* start at top */
+  /* Enable vertical scrolling if sidebar content overflows */
   overflow-y: auto;
-  box-sizing: border-box;
 }
 
 .feed {
+  /* Padding inside feed for content spacing */
   padding: 20px;
+  /* Allow feed to grow and fill remaining space next to sidebar */
   flex-grow: 1;
+  /* Enable vertical scrolling if feed content overflows */
   overflow-y: auto;
+  /* Include padding and border in element's size */
   box-sizing: border-box;
+  /* Position relative to allow absolute positioning of child elements */
+  position: relative;
 }
 .logo {
+  /* Larger font size for branding or app name */
   font-size: 24px;
-  margin-bottom: 30px;
+  /* Purple color to stand out and create brand identity */
   color: #a305a6;
+  /* Remove default top margin for tight layout */
   margin-top: 0;
+  /* Left padding to offset the logo for visual balance */
+  padding-left: 20%;
+  /* Top padding to give breathing room from top edge */
+  padding-top: 10%;
+  /* Make font weight bolder for emphasis */
+  font-weight: bolder;
+  /* Fixed height to maintain consistent logo container size */
+  height: 2em;
+  /* Negative bottom margin to pull up content below slightly */
+  margin-bottom: -10px;
+}
+
+.logo:hover {
+  /* On hover, maintain black background for consistency */
+  background-color: #000000;
+  /* Rounded corners for a softer, approachable look */
+  border-radius: 1em;
+  /* Bold font weight to emphasize interactivity */
+  font-weight: bold;
+  /* Add subtle glow effect to highlight hover state */
+  box-shadow: 0 0 20px rgba(127, 126, 126, 0.8);
 }
 
 .sidebar ul {
+  /* Remove default list styling for custom navigation appearance */
   list-style: none;
+  /* Remove default padding for clean alignment */
   padding: 0;
 }
 
-.sidebar li {
-  margin-bottom: 25px;
+.sidebar a {
+  /* White text color for readability on dark sidebar */
+  color: white;
+  /* Remove underline from links for cleaner look */
+  text-decoration: none;
+  /* Larger font size for easy click targets and readability */
+  font-size: 24px;
+  /* Fixed height for consistent clickable area */
+  height: 2.5em;
+  /* Left padding to indent links for visual hierarchy */
+  padding-left: 10%;
 }
 
-.sidebar a {
-  color: white;
-  text-decoration: none;
-  font-size: 24px;
+.sidebar a:hover {
+  /* On hover, maintain black background for contrast */
+  background-color: #000000;
+  /* Rounded corners for visual softness */
+  border-radius: 1em;
+  /* Bold font weight to indicate active state */
+  font-weight: bold;
+  /* Add glow effect to make hovered link stand out */
+  box-shadow: 0 0 20px rgba(127, 126, 126, 0.8);
 }
+
 .sidebar nav ul li a {
+  /* Use flexbox to align icon and text horizontally */
   display: flex;
+  /* Vertically center items within link */
   align-items: center;
-  gap: 8px; /* space between icon and text */
+  /* Space between icon and text for clarity */
+  gap: 9px; /* space between icon and text */
+  /* White color for good contrast */
   color: #fff;
+  /* Remove underline for cleaner look */
   text-decoration: none;
+  /* Semi-bold font weight for emphasis */
   font-weight: 600;
 }
 
 .sidebar nav ul li a i {
+  /* Slightly larger icon size for visibility */
   font-size: 1.1em;
 }
+/* Ensure .tweet-box is positioned relative for absolute positioning of its button */
+.tweet-box {
+  position: relative;
+}
 .tweet-box textarea {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
+  /* Limit textarea width to about two-thirds for balanced layout */
+  width: 63%;
+  /* Padding inside textarea for comfortable typing space */
+  padding: 2.4%;
+  /* Border style to visually separate textarea */
+  border: 1px solid #333;
+  /* Rounded edges for modern look */
+  border-radius: 2em;
+  /* Prevent resizing to maintain layout consistency */
   resize: none;
-  height: 80px;
-  background-color: #2a2a2a;
+  /* Match background to dark theme */
+  background-color: #000000;
+  /* White text for readability */
   color: white;
+  /* Top margin to separate from elements above */
+  margin-top: 10%;
+  /* Bottom margin for spacing from elements below */
+  margin-bottom: 2%;
+  /* Increase font size for easier reading and typing */
+  font-size: 1.2rem;
+  /* Relative height to keep input compact */
+  height: 15%;
 }
 
+.tweet-box textarea:focus {
+  /* Remove default outline for custom focus styling */
+  outline: none; 
+  /* Add subtle glow to indicate focus */
+  box-shadow: 0 0 20px rgba(112, 111, 111, 0.8);
+  /* Slight scale up for interactive feedback */
+  transform: scale(1.03);
+  /* Smooth animation for focus transition */
+  animation: popOut 0.6s ease forwards;
+}
 .tweet-box button {
+  /* Margin to separate button from textarea */
   margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #1da1f2;
+  /* Padding inside button for comfortable click area */
+  padding: 1.5%;
+  /* Purple background consistent with brand colors */
+  background-color: #a305a6;
+  /* Position button absolutely within .tweet-box */
+  position: absolute;
+  /* Place button near bottom right relative to textarea */
+  bottom: 15%;
+  right: 40%;
+  /* Ensure button appears above other elements */
+  z-index: 10;
+  /* Remove default border for cleaner look */
   border: none;
-  border-radius: 8px;
+  /* Rounded edges for modern button shape */
+  border-radius: 2em;
+  /* White text for contrast */
   color: white;
+  /* Pointer cursor to indicate clickability */
   cursor: pointer;
+  /* Font size for readability */
+  font-size: 1rem;
 }
 
+.tweet-box button:focus {
+  /* Add glow to indicate focus */
+  box-shadow: 0 0 20px rgba(110, 108, 108, 0.8);
+  /* Slight scale up for interactive feedback */
+   transform: scale(1.03);
+   /* Smooth animation for focus transition */
+   animation: popOut 0.6s ease forwards;
+}
+.tweet-feed {
+  /* Include padding and border in element's size */
+  box-sizing: border-box;
+  /* Width set to 65% to fit alongside sidebar and tweet box */
+  width: 65%;
+  /* Remove left padding for alignment */
+  padding-left: 0;
+  /* Small right padding for spacing */
+  padding-right: 1em;
+}
+.left-vertical-line {
+  /* Fixed position to stay visible during scrolling */
+  position: fixed;
+  /* Stretch from top to bottom of viewport */
+  top: 0;
+  bottom: 0;
+  /* Position line at 70% from left to visually separate areas */
+  left: 70%; /* adjust to where you want the line */
+  /* Thin line width */
+  width: 1px;
+  /* Dark gray color for subtle divider */
+  background-color: #333;
+  /* High z-index to appear above most elements */
+  z-index: 1000;
+}
+.right-vertical-line {
+  /* Fixed position to stay visible during scrolling */
+  position: fixed;
+  /* Stretch from top to bottom of viewport */
+  top: 0;
+  bottom: 0;
+  /* Position line at 75% from right for visual separation */
+  right: 75%; /* adjust to where you want the line */
+  /* Thin line width */
+  width: 1px;
+  /* Dark gray color for subtle divider */
+  background-color: #333;
+  /* High z-index to appear above most elements */
+  z-index: 1000;
+}
 .tweet {
-  background-color: #1e1e1e;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 10px;
+  /* Padding inside each tweet for content spacing */
+  padding: 1.5em;
+  /* Remove top margin for tight stacking */
+  margin-top: 0;
+  /* Make tweet take full width of container */
+  width: 100%;
+  /* Include padding and border in element's size */
+  box-sizing: border-box;
+  /* Rounded corners for modern card-like appearance */
+  border-radius: 2em;
+  /* Border to visually separate tweets */
+  border: 1px solid #333;
+  /* Small bottom margin to separate stacked tweets */
+  margin-bottom: 1px;
+  /* Hide overflow to maintain clean edges */
+  overflow: hidden;
+  /* Smooth scaling animation for interactive effects */
+  transition: transform 0.28s cubic-bezier(.2,.9,.2,1);
+  /* Optimize performance by hinting transform usage */
+  will-change: transform;
+  /* Set transform origin to top center for scaling effects */
+  transform-origin: center top;
 }
 
-.tweet-actions {
-  margin-top: 10px;
+/* scale up slightly when under the glass */
+/* Provides subtle zoom effect to highlight tweet under special UI element */
+.tweet.zoom-in {
+  transform: scale(1.05);
 }
 
-.tweet-actions button {
-  background: none;
-  border: none;
-  color: #ccc;
-  margin-right: 10px;
-  cursor: pointer;
+/* when tweet is passing under the glass header */
+/* Larger scale and glow effect to emphasize focus on tweet */
+.tweet.passing-under-glass {
+  transform: scale(1.12);
+  box-shadow: 0 0 25px rgba(163, 5, 166, 0.6);
+  /* Smooth transition for transform and shadow */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  /* Bring to front to avoid overlap issues */
+  z-index: 5;
+}
+.tweet:hover {
+  /* Add glow effect on hover for interactivity */
+  box-shadow: 0 0 20px rgba(127, 126, 126, 0.8);
+  /* Add subtle inset highlights for depth */
+  -webkit-box-shadow: inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7), 
+                        inset 0 0 3px 1px rgba(255, 255, 255, 0.7);
+  /* Alternative box-shadow commented out for possible future use */
+  /*box-shadow: inset 6px 6px 0px -6px rgba(255, 255, 255, 0.7), 
+                inset 0 0 8px 1px rgba(255, 255, 255, 0.7);*/
 }
 
-.home-page {
-  padding: 20px;
+.liquid-glass-wrapper {
+  /* Fixed position near top center for a decorative or functional overlay */
+  position: fixed;
+  top: 0;
+  /* Offset from left to center the element */
+  left: 25%;
+  /* Width covers a large portion for visibility */
+  width: 43%;
+  /* Short height to act as a header or highlight bar */
+  height: 10%;
+  /* Padding inside for spacing */
+  padding: 1%;
+  /* Hide overflow to clip any child content */
+  overflow: hidden;
+  /* Rounded corners for smooth appearance */
+  border-radius: 2em;
+  /* Margin below to separate from content */
+  margin-bottom: 1%;
+  /* Semi-transparent border for subtle outline */
+  border: 1px solid rgba(255,255,255,0.3);
+  /* Soft shadows for depth and layering effect */
+  box-shadow: 0 6px 12px rgba(88,87,87,0.25), 0 8px 32px rgba(0,0,0,0.35);
+  /* Drop shadow for additional depth */
+  filter: drop-shadow(-8px -10px 46px #0000005f);
+  /* Apply brightness and blur for frosted glass effect */
+  backdrop-filter: brightness(1.1) 
+        blur(2px);
+  /* WebKit specific filter for compatibility */
+  -webkit-backdrop-filter: brightness(2.1) blur(1.5px);
+  /* Ensure this element is above most content */
+  z-index: 100;
 }
 
-.welcome-banner {
-  background-color: #e008e4;
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+.liquid-glass-wrapper::before {
+    /* Pseudo-element for decorative inner shadows */
+    content: '';
+    /* Position absolutely to cover entire container */
+    position: absolute;
+    inset: 0;
+    /* Place behind content */
+    z-index: 0;
+    /* Hide overflow to keep shadows clean */
+    overflow: hidden;
+    /* Inner shadows for highlight and depth */
+    -webkit-box-shadow: inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7), 
+                        inset 0 0 3px 1px rgba(255, 255, 255, 0.7);
+    box-shadow: inset 6px 6px 0px -6px rgba(255, 255, 255, 0.7), 
+                inset 0 0 8px 1px rgba(255, 255, 255, 0.7);
+}
+
+.search-container {
+  /* Relative positioning to allow absolute positioning of icon */
+  position: relative;
+  /* Full width container for search bar */
+  width: 100%;
+  /* Limit max width for better control and responsiveness */
+  max-width: 900px; /* adjust as needed */
+}
+
+.search-container i {
+  /* Absolute position icon inside input */
+  position: absolute;
+  /* Vertically center icon */
+  top: 50%;
+  /* Position icon with left offset */
+  left: 1.7em;
+  /* Translate vertically to perfectly center */
+  transform: translateY(-50%);
+  /* White color for visibility on dark background */
+  color: #ffffff;
+  /* Prevent icon from capturing pointer events to avoid blocking input */
+  pointer-events: none;
+  /* Smooth color transition on interaction */
+  transition: color 0.3s ease;
+}
+
+.search-bar {
+  /* Width set to 70% for balanced layout */
+  width: 70%;
+  /* Padding with extra left space for icon */
+  padding: 0.8em 1.2em 0.8em 3.6em; /* space for icon */
+  /* Rounded edges for modern input style */
+  border-radius: 2em;
+  /* Border to visually separate input */
+  border: 1px solid #333;
+  /* Slightly transparent background for subtlety */
+  background-color: rgba(255, 255, 255, 0.1);
+  /* White text for readability */
+  color: #ffffff;
+  /* Remove default outline for custom focus style */
+  outline: none;
+  /* Font size for readability */
+  font-size: 1em;
+  /* Margin around input for spacing */
+  margin: 0.4em;
+  /* Smooth transition for all changes */
+  transition: all 0.3s ease;
+}
+
+@keyframes popOut {
+  /* Animation for scaling up and fading in */
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.search-bar:focus {
+  /* Change border color to brand purple to indicate focus */
+  border: 1px solid #a305a6;
+  /* Slight scale up for interactive feedback */
+  transform: scale(1.03);
+  /* Play popOut animation smoothly */
+  animation: popOut 0.6s ease forwards;
 }
 
 .flash-message {
+  /* Padding for comfortable reading */
   padding: 10px 15px;
-  border-radius: 5px;
+  /* Rounded corners for modern look */
+  border-radius: 2em;
+  /* Space below message to separate from other content */
   margin-bottom: 15px;
+  /* Bold font for emphasis */
   font-weight: bold;
 }
 
 .flash-message.success {
+  /* Green background to indicate success */
   background-color: #28a745;
+  /* White text for readability */
   color: white;
 }
 
 .flash-message.error {
+  /* Red background to indicate error */
   background-color: #dc3545;
+  /* White text for readability */
   color: white;
 }
 
-.sidebar a.active {
-  background-color: #333;
-  padding: 8px 12px;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
 .tweet-header-line {
+  /* Flex layout to align username and time horizontally */
   display: flex;
+  /* Vertically center items */
   align-items: center;
+  /* Small gap between elements */
   gap: 5px;
+  /* Smaller font size for metadata */
   font-size: 0.9rem;
+  /* Light gray color for subtlety */
   color: #ccc;
-  margin-bottom: 5px;
+  /* Space below header line for separation */
+  margin-bottom: 1.5%;
 }
 
 .tweet-username {
+  /* Bold font for username to stand out */
   font-weight: bold;
+  /* White color for contrast */
   color: #fff;
 }
 
 .tweet-time {
+  /* Gray color to de-emphasize timestamp */
   color: #6e767d;
 }
 
 .tweet-text {
+  /* Margins to separate text from other elements */
   margin: 5px 0 10px 0;
+  /* Readable font size */
   font-size: 1rem;
+  /* Line height for better readability */
   line-height: 1.4;
 }
 
 .tweet-actions {
+  /* Flex layout to space action buttons evenly */
   display: flex;
+  /* Gap between buttons for clarity */
   gap: 2rem;
+  /* Gray color to de-emphasize by default */
   color: #6e767d;
-  font-size: 0.9rem;
 }
 
 .tweet-actions button {
+  /* Flex layout to center icon and text */
   display: flex;
   align-items: center;
-  gap: 5px;
-  background: none;
+  /* Margins to separate buttons */
+  margin-right: 10%;
+  margin-left: 10%;
+  /* Remove default border and background */
   border: none;
-  color: inherit;
+  background: none;
+  /* Pointer cursor to indicate clickability */
   cursor: pointer;
+  /* Slightly smaller font size for buttons */
   font-size: 0.9rem;
+  /* Inherit color from parent */
+  color: inherit;
 }
 
 .tweet-actions button:hover {
-  color: #1da1f2;
+  /* Change color to brand purple on hover for interactivity */
+  color: #a305a6
 }
 
 .dot {
+  /* Bold font weight for emphasis on dot separators */
   font-weight: bold;
+}
+.zoom-out {
+  /* Scale down slightly */
+  transform: scale(0.95);
+  /* Apply blur for visual effect indicating deactivation or background */
+  filter: blur(2px);
+  /* Smooth transition for transform and filter changes */
+  transition: transform 0.3s ease, filter 0.3s ease;
 }

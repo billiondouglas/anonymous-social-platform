@@ -1,5 +1,5 @@
 body {
-  background-color: #000000;
+  background-color: #282828;
   color: #c9d1d9;
   font-family: 'Segoe UI', sans-serif;
   display: flex;
@@ -10,10 +10,10 @@ body {
 }
 
 .container {
-  background: #161b22;
+  background: #000000;
   padding: 2.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #30363d;
+  border-radius: 3em;
+  /*box-shadow: 0 0 10px #30363d;*/
   width: 100%;
   max-width: 400px;
 }
@@ -31,17 +31,22 @@ input {
   width: 100%;
   padding: 0.6rem;
   margin-top: 0.5rem;
-  border: none;
-  border-radius: 14px;
-  background: #21262d;
+  border: 1px solid #333;
+  border-radius: 1.4em;
+  background: #000000;
   color: #c9d1d9;
+}
+
+input:focus {
+  box-shadow: 0 0 20px rgba(86, 85, 85, 0.8);
+  outline: none;
 }
 
 button {
   width: 104%;
   margin-top: 2rem;
   padding: 0.7rem;
-  background-color: #1da1f2;
+  background-color: #a305a6;
   border: none;
   border-radius: 14px;
   color: white;
@@ -50,7 +55,7 @@ button {
 }
 
 button:hover {
-  background-color: #045d98;
+  box-shadow: 0 0 20px rgba(86, 85, 85, 0.8);
 }
 
 #secret-key-container {
@@ -68,7 +73,11 @@ button:hover {
 
 a {
   text-decoration: none;
-  color: #1da1f2;
+  color: #0062ff;
+}
+
+a:hover {
+  color: #a305a6;
 }
 .flash-messages {
   position: fixed;
@@ -77,21 +86,19 @@ a {
   transform: translateX(-50%);
   z-index: 9999;
   padding: 0.8rem 1.2rem;
-  border-radius: 5px;
-  font-size: 0.9rem;
+  border-radius: 2em;
+  font-size: 1.2em;
   text-align: center;
-  max-width: 90%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  max-width: 100%;
+  box-shadow: 0 2px 6px rgba(71, 71, 71, 0.3);
 }
 
 .flash-messages.error {
-  background-color: #ff4d4d;
+  background-color: #f70000;
   color: #fff;
-  border: 1px solid #cc0000;
 }
 
 .flash-messages.success {
-  background-color: #28a745;
+  background-color: #0ae43d;
   color: #fff;
-  border: 1px solid #1c7c31;
 }
