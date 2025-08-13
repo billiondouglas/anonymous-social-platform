@@ -26,7 +26,7 @@ body {
   /* Fix body height to viewport height to control scrolling behavior */
   height: 100vh; /* fix height to viewport */
   /* Allow vertical scrolling if content overflows viewport height */
-  overflow-y: auto; /* allow vertical scroll if needed */
+  overflow-y: auto; /* page scrolls; sidebar will stay fixed */
   /* Hide scrollbar visually but keep scrolling functional in Firefox */
   scrollbar-width: none; /* Firefox */
   /* Hide scrollbar visually but keep scrolling functional in IE and Edge */
@@ -42,7 +42,7 @@ body::-webkit-scrollbar {
   display: flex;
   /* Take full width and height of parent */
   width: 100%;
-  height: 100%;
+  height: auto;
   /* Limit max width to viewport width minus padding to prevent overflow */
   max-width: calc(100vw - 20px); /* viewport minus 10px padding on each side */
   /* Center container horizontally within viewport */
@@ -62,15 +62,18 @@ body::-webkit-scrollbar {
   flex-shrink: 0; /* prevent shrinking */
   /* Enable vertical scrolling if sidebar content overflows */
   overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 5%;
+  z-index: 1000;
 }
 
 .feed {
   /* Padding inside feed for content spacing */
   padding: 20px;
+  margin-left: 20vw;
   /* Allow feed to grow and fill remaining space next to sidebar */
   flex-grow: 1;
-  /* Enable vertical scrolling if feed content overflows */
-  overflow-y: auto;
   /* Include padding and border in element's size */
   box-sizing: border-box;
   /* Position relative to allow absolute positioning of child elements */
@@ -162,7 +165,7 @@ body::-webkit-scrollbar {
 }
 .tweet-box textarea {
   /* Limit textarea width to about two-thirds for balanced layout */
-  width: 63%;
+  width: 58%;
   /* Padding inside textarea for comfortable typing space */
   padding: 2.4%;
   /* Border style to visually separate textarea */
@@ -183,6 +186,9 @@ body::-webkit-scrollbar {
   font-size: 1.2rem;
   /* Relative height to keep input compact */
   height: 15%;
+  overflow-y: hidden; /* hide scrollbar while growing */
+  resize: none;       /* disable manual resize if you want full control */
+  transition: height 0.15s ease; /* smooth height changes */
 }
 
 .tweet-box textarea:focus {
@@ -287,7 +293,7 @@ body::-webkit-scrollbar {
   /* Hide overflow to maintain clean edges */
   overflow: hidden;
   /* Smooth scaling animation for interactive effects */
-  transition: transform 0.28s cubic-bezier(.2,.9,.2,1);
+  transition: transform 0.3s ease;
   /* Optimize performance by hinting transform usage */
   will-change: transform;
   /* Set transform origin to top center for scaling effects */
@@ -296,20 +302,10 @@ body::-webkit-scrollbar {
 
 /* scale up slightly when under the glass */
 /* Provides subtle zoom effect to highlight tweet under special UI element */
-.tweet.zoom-in {
-  transform: scale(1.05);
+.tweet.zoom {
+  transform: scale(1.01);
 }
 
-/* when tweet is passing under the glass header */
-/* Larger scale and glow effect to emphasize focus on tweet */
-.tweet.passing-under-glass {
-  transform: scale(1.12);
-  box-shadow: 0 0 25px rgba(163, 5, 166, 0.6);
-  /* Smooth transition for transform and shadow */
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  /* Bring to front to avoid overlap issues */
-  z-index: 5;
-}
 .tweet:hover {
   /* Add glow effect on hover for interactivity */
   box-shadow: 0 0 20px rgba(127, 126, 126, 0.8);
@@ -486,6 +482,7 @@ body::-webkit-scrollbar {
   font-weight: bold;
   /* White color for contrast */
   color: #fff;
+  text-decoration: none;
 }
 
 .tweet-time {
@@ -545,4 +542,80 @@ body::-webkit-scrollbar {
   filter: blur(2px);
   /* Smooth transition for transform and filter changes */
   transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Profile Page Styles */
+.profile-header {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.profile-stats {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 0.5rem 0 1rem;
+}
+.profile-tweets {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.tweet header {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+}
+.tweet-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+.btn {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  text-decoration: none;
+}
+.profile-identity {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.avatar-wrap {
+  flex: 0 0 auto;
+}
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e6e6e6;
+  display: block;
+}
+.avatar--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #666;
+}
+.bio {
+  margin-top: 0.35rem;
+  color: #444;
+  max-width: 60ch;
+}
+.name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
 }

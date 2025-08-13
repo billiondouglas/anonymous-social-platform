@@ -1,0 +1,81 @@
+<% /* ================================
+     Profile Page View
+     - Uses default layout set in server (layouts/main.ejs)
+     - This file contains ONLY page-specific content
+     - We set page-level variables here
+   ================================ */ %>
+
+<% var title = '@' + user.username + ' • Profile' %> <% /* Title for <title> tag in layout */ %>
+<% bodyClass = '' %> <% /* Optional: add page-specific body classes here */ %>
+<% pageWrapperClass = 'home-page page-profile' %> <% /* Reuse home wrapper + profile tag */ %>
+
+<% /* -------- Profile Header (identity) -------- */ %>
+<header class="page-header">
+  <div class="profile-identity">
+    <div class="avatar-wrap">
+      <% if (user.avatarUrl) { %>
+        <img class="avatar" src="<%= user.avatarUrl %>" alt="<%= user.username %>'s avatar"/>
+      <% } else { %>
+        <div class="avatar avatar--placeholder"><%= (user.username || '?')[0].toUpperCase() %></div>
+      <% } %>
+    </div>
+    <div>
+      <div class="name-row">
+        <h1>@<%= user.username %></h1>
+      </div>
+      <p>Joined: <%= user.joinDate ? new Date(user.joinDate).toDateString() : '—' %></p>
+      <% if (user.bio) { %>
+        <p class="bio"><%= user.bio %></p>
+      <% } %>
+    </div>
+    <div style="margin-left:auto">
+      <% if (typeof isOwn !== 'undefined' && isOwn) { %>
+        <a class="btn" href="/logout">Log out</a>
+      <% } else { %>
+        <a class="btn js-follow-btn" href="#" data-username="<%= user.username %>">Follow</a>
+      <% } %>
+    </div>
+  </div>
+</header>
+
+<% /* -------- Stats Row -------- */ %>
+<section class="stats">
+  <div><strong><%= stats.tweetCount %></strong> Tweets</div>
+  <% if (stats && typeof stats.followersCount !== 'undefined') { %>
+    <div><strong><%= stats.followersCount %></strong> Followers</div>
+  <% } %>
+  <% if (stats && typeof stats.followingCount !== 'undefined') { %>
+    <div><strong><%= stats.followingCount %></strong> Following</div>
+  <% } %>
+  <% if (typeof isOwn !== 'undefined' && isOwn) { %>
+    <a class="btn" href="/settings/profile">Edit Profile</a>
+  <% } %>
+</section>
+
+<% /* -------- Tweets List (reuse home feed classes) -------- */ %>
+<section id="tweetFeed" class="tweet-feed">
+  <% if (tweets && tweets.length) { %>
+    <% tweets.forEach(t => { %>
+      <article class="tweet">
+        <div class="tweet-header-line">
+          <span class="tweet-username">@<%= t.username %></span>
+          <span class="dot">•</span>
+          <time class="tweet-time" datetime="<%= t.createdAt %>">
+            <%= t.createdAt ? new Date(t.createdAt).toLocaleString() : '' %>
+          </time>
+        </div>
+        <p class="tweet-text"><%= t.text %></p>
+        <div class="tweet-actions">
+         <button class="like-btn" data-tweet-id="<%= t._id %>">
+           <i class="<%= t.likes && t.likes.some(id => id.toString() === (user && user._id ? user._id.toString() : '')) ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+           <%= (t.likes || []).length %>
+         </button>
+          <button><i class="fa-solid fa-retweet"></i> <%= (t.retweets || []).length %></button>
+          <button><i class="fa-regular fa-comment"></i> <%= (t.comments || []).length %></button>
+        </div>
+      </article>
+    <% }); %>
+  <% } else { %>
+    <p>No tweets yet.</p>
+  <% } %>
+</section>

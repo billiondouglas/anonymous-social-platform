@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= typeof title !== 'undefined' ? title : 'Tweaker' %></title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles/style.css"/>
+</head>
+<body class="<%= typeof bodyClass !== 'undefined' ? bodyClass : '' %>">
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h1 class="logo">Tweaker</h1>
+      <nav>
+        <ul>
+          <li><a href="/profile"><i class="fa-solid fa-user"></i> Profile</a></li>
+          <li><a href="/home"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="#"><i class="fa-solid fa-rss"></i> Feed</a></li>
+          <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+          <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Vertical dividers -->
+    <div class="left-vertical-line"></div>
+    <div class="right-vertical-line"></div>
+
+    <!-- Main content -->
+    <main class="feed">
+      <%- body %>
+    </main>
+  </div>
+</body>
+  <script src="/scripts/scripts.js" defer></script>
+</html>
